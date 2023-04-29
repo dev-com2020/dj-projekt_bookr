@@ -3,10 +3,9 @@
 <ul class="list-group">
     {% for item in book_list %}
     <li class="list-group">
-     <span class="text-info">Tytuł: </span><span>{{ item.book.title }}</span>
+     <span class="text-info">Tytuł: {{ item.book.title }}</span>
     </li>
-  <br>
-  <span class="text-info">Autor: </span><span>{{ item.book.author }}</span>
+    <span class="text-info">Wydawca: {{ item.book.publisher }}</span>
     {% endfor %}
 </ul>
  {% endblock %}
