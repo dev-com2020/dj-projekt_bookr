@@ -14,10 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 import reviews.views
+# importujemy nasz moduł reviews.views PyCharm zawsze podkreśla nam to na czerwono, ale nie przejmuj się tym
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',reviews.views.index)
+    path('', reviews.views.index),
+    # path('', include('views.index'))
 ]
