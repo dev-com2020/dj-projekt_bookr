@@ -18,7 +18,6 @@ from django.contrib import admin
 from django.urls import path, include
 from reviews.admin import admin_site
 
-from bookr import settings
 
 # importujemy nasz moduł reviews.views PyCharm zawsze podkreśla nam to na czerwono, ale nie przejmuj się tym
 
@@ -26,5 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('bookadmin/', admin_site.urls),
     path('', include('reviews.urls')),
-    path(settings.STATIC_URL, django.views.static.serve, {'document_root': settings.STATIC_URL}),
+
 ]
