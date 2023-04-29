@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-import reviews.views
+from reviews.admin import admin_site
+
 # importujemy nasz moduł reviews.views PyCharm zawsze podkreśla nam to na czerwono, ale nie przejmuj się tym
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('bookadmin/', admin_site.urls),
     path('', include('reviews.urls'))
 ]

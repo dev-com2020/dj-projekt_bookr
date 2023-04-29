@@ -1,6 +1,7 @@
 from django.contrib import auth
 from django.db import models
 
+
 # Create your models here.
 
 class Publisher(models.Model):
@@ -10,6 +11,7 @@ class Publisher(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Book(models.Model):
     """Opublikowana książka."""
@@ -25,7 +27,7 @@ class Book(models.Model):
                                           through="BookContributor")
 
     def __str__(self):
-        return self.title
+        return "{} ({})".format(self.title, self.isbn)
 
 
 class Contributor(models.Model):
