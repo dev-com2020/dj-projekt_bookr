@@ -13,14 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import django
 from django.contrib import admin
 from django.urls import path, include
 from reviews.admin import admin_site
+
+from bookr import settings
 
 # importujemy nasz moduł reviews.views PyCharm zawsze podkreśla nam to na czerwono, ale nie przejmuj się tym
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('bookadmin/', admin_site.urls),
-    path('', include('reviews.urls'))
+    path('', include('reviews.urls')),
+    path(settings.STATIC_URL, django.views.static.serve, {'document_root': settings.STATIC_URL}),
 ]

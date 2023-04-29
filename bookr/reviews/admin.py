@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.contrib.admin import AdminSite
 from reviews.models import (Review, Book, Publisher, Contributor, BookContributor)
-
 from bookr.admin import BookrAdminSite
 
 
