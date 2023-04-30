@@ -1,27 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <h1>{{ book.title }}</h1>
-      <h2>{{ book.publisher }}</h2>
-      <h3>{{ book.publication_date }}</h3>
-      {% if not reviews %}
-      <h3>No reviews yet</h3>
-      {% else %}
-      <h4>Rating: <span class="badge badge-primary badge-pill">{{ book_rating }}</span></h4>
-      {% endif %}
-         <h3>Review Comments</h3>
-      <ul>
-        {% for review in reviews %}
-        <li class="list-group-item">
-          <h5>{{ review.rating }} / 5</h5>
-          <p>{{ review.review }}</p>
-          <p>By {{ review.reviewer }}</p>
-        </li>
-        {% endfor %}
-      </ul>
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>{{ book.title }}</h1>
+            <h2>{{ book.publisher }}</h2>
+            <h3>{{ book.publication_date }}</h3>
+            <br>
+            <h4>Rating: <span class="badge badge-primary badge-pill">{{ book_rating }}</span></h4>
+            <h3>Review Comments</h3>
+            <ul>
+                {% for review in reviews %}
+                <li class="list-group-item">
+                    <span class="text-info">Komentarz:</span><span>{{ review.content }}</span><br>
+                    <span class="text-info">Data:</span><span>{{ review.date_created }}</span><br>
+                    <span class="text-info">Utworzył:</span><span>{{ review.creator.username }}</span><br>
+                    <a href="{% url 'review_edit' book.pk review.pk %}">Edytuj</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <a class="btn btn-primary" href="{% url 'review_create' book.pk %}">Dodaj komentarz</a>
+        </div>
     </div>
-  </div>
 </div>
-  {% endblock %}
+
+{% endblock %}

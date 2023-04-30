@@ -32,6 +32,6 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = '__all__'
-        widgets = {"reviewer_name": forms.TextInput(attrs={'placeholder': 'Your name'})}
+        widgets = {"creator": forms.TextInput(attrs={'placeholder': 'Your name'})}
 
     rating = forms.IntegerField(min_value=0, max_value=5)

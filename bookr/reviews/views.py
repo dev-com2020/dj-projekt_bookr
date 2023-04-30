@@ -1,8 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from .forms import SearchForm, PublisherForm
-from .models import Book, Contributor, Publisher
+from django.utils import timezone
+
+from .forms import SearchForm, PublisherForm, ReviewForm
+from .models import Book, Contributor, Publisher, Review
 from .utils import average_rating
 
 
@@ -68,7 +70,8 @@ def book_search(request):
 
     return render(request, "search-result.html", {'search_text': search_text, 'form': form, 'books': books})
 
-def book_detail(request,pk):
+
+def book_detail(request, pk):
     book = get_object_or_404(Book, pk=pk)
     reviews = book.review_set.all()
     if reviews:
@@ -76,17 +79,18 @@ def book_detail(request,pk):
         context = {
             'book': book,
             'book_rating': book_rating,
-            'number_of_reviews': reviews}
+            'reviews': reviews}
     else:
         context = {
             'book': book,
             'book_rating': None,
-            'number_of_reviews': None}
+            'reviews': None}
 
     return render(request, "book_detail.html", context)
 
+
 def publisher_edit(request, pk=None):
-    if pk is None:
+    if pk is not None:
         publisher = get_object_or_404(Publisher, pk=pk)
     else:
         publisher = None
@@ -99,8 +103,43 @@ def publisher_edit(request, pk=None):
                 messages.success(request, "Dodano nowego wydawcę.")
             else:
                 messages.success(request, "Zaktualizowano dane wydawcy = {}".format(update_publisher.name))
-            return redirect("publisher_edit",update_publisher.pk)
+            return redirect("publisher_edit", update_publisher.pk)
     else:
         form = PublisherForm(instance=publisher)
 
-    return render(request, "form-example.html", {"form": form, "method": request.method, "publisher": publisher, "pk": pk})
+    return render(request, "form-example.html",
+                  {"form": form, "publisher": publisher, "model_type": "Publisher"})
+
+
+def review_edit(request, book_pk, review_pk=None):
+    book = get_object_or_404(Book, pk=book_pk)
+
+    if review_pk is not None:
+        review = get_object_or_404(Review, book_id=book_pk, pk=review_pk)
+    else:
+        review = None
+
+    if request.method == "POST":
+        form = ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            update_review = form.save(False)
+            update_review.book = book
+
+            if review is None:
+                messages.success(request, "Dodano nową recenzję.")
+            else:
+                update_review.date_edited = timezone.now()
+                messages.success(request, "Zaktualizowano dane recenzji = {}".format(book.title))
+
+            update_review.save()
+            return redirect("book_detail", book.pk)
+    else:
+        form = ReviewForm(instance=review)
+
+    return render(request, "instance-form.html",
+                  {"form": form,
+                   "instance": review,
+                   "model_type": "Review",
+                   "related_instance": book,
+                   "related_model_type": "Book",
+                   })

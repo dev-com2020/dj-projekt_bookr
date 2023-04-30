@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>
+    {% if instance %}
+        Edycja {{ model_type }} {{ instance }}
+    {% else %}
+        Dodawanie {{ model_type }}
+    {% endif %}
+</h2>
+{% if related_instance %}
+    <h3>Przypisane do {{ related_model_type }} {{ related_instance }}</h3>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">
+      {% if instance %}
+        Zapisz zmiany
+      {% else %}
+        Dodaj
+      {% endif %}
+    </button>
+</form>
+{% endblock %}
