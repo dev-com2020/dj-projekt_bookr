@@ -23,6 +23,7 @@
                 {% endfor %}
             </ul>
             <a class="btn btn-primary" href="{% url 'review_create' book.pk %}">Dodaj komentarz</a>
+            <a class="btn btn-primary" href="{% url 'book_media' book.pk %}">Dodaj obraz</a>
 
             <a href="{{ MEDIA_URL }}test.txt">TEST POBIERANIA</a>
         </div>

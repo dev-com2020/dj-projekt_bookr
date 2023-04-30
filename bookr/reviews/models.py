@@ -25,6 +25,7 @@ class Book(models.Model):
                                   on_delete=models.CASCADE)
     contributors = models.ManyToManyField('Contributor',
                                           through="BookContributor")
+    cover = models.ImageField(upload_to="covers/", null=True, blank=True)
 
     def __str__(self):
         return "{} ({})".format(self.title, self.isbn)
