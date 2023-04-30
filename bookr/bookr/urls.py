@@ -14,12 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 
 from reviews.admin import admin_site
+
+from bookr.views import profile
 
 # importujemy nasz moduł reviews.views PyCharm zawsze podkreśla nam to na czerwono, ale nie przejmuj się tym
 
@@ -28,7 +31,8 @@ urlpatterns = [
     path('bookadmin/', admin_site.urls),
     path('', include('reviews.urls')),
     path('__debug__/', include('debug_toolbar.urls')),
-
+    path('accounts/', include(('django.contrib.auth.urls','auth'), namespace='accounts')),
+    path('accounts/profile/', profile, name='profile')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

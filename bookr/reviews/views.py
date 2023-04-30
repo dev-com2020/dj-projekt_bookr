@@ -1,6 +1,7 @@
 from io import BytesIO
 
 from PIL import Image
+from django.contrib.auth.decorators import login_required
 from django.core.files.images import ImageFile
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
@@ -114,7 +115,7 @@ def publisher_edit(request, pk=None):
     return render(request, "form-example.html",
                   {"form": form, "publisher": publisher, "model_type": "Publisher"})
 
-
+@login_required
 def review_edit(request, book_pk, review_pk=None):
     book = get_object_or_404(Book, pk=book_pk)
 
@@ -148,7 +149,7 @@ def review_edit(request, book_pk, review_pk=None):
                    "related_model_type": "Book",
                    })
 
-
+@login_required
 def book_media(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == "POST":

@@ -11,6 +11,7 @@
             <h3>{{ book.publication_date }}</h3>
             <br>
             <h4>Rating: <span class="badge badge-primary badge-pill">{{ book_rating }}</span></h4>
+            {% if user.is_authenticated %}
             <h3>Review Comments</h3>
             <ul>
                 {% for review in reviews %}
@@ -19,12 +20,15 @@
                     <span class="text-info">Data:</span><span>{{ review.date_created }}</span><br>
                     <span class="text-info">Utworzył:</span><span>{{ review.creator.username }}</span><br>
                     <a href="{% url 'review_edit' book.pk review.pk %}">Edytuj</a>
+
                 </li>
                 {% endfor %}
             </ul>
+             {% endif %}
+            {% if user.is_authenticated %}
             <a class="btn btn-primary" href="{% url 'review_create' book.pk %}">Dodaj komentarz</a>
             <a class="btn btn-primary" href="{% url 'book_media' book.pk %}">Dodaj obraz</a>
-
+            {% endif %}
             <a href="{{ MEDIA_URL }}test.txt">TEST POBIERANIA</a>
         </div>
     </div>
