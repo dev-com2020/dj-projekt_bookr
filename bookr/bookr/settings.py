@@ -58,7 +58,8 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
-
+# zmienna ta musi być zdefiniowana w pliku settings.py, a jej wartością musi być lista adresów IP, które mają dostęp do debugbara.
+# W naszym przypadku jest to tylko
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -79,6 +80,8 @@ WSGI_APPLICATION = 'bookr.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField' # dodajemy tę linię, aby uniknąć ostrzeżenia w konsoli
 
 DATABASES = {
     'default': {

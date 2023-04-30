@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <p>
+        <label for="id_password_input">Password:</label>
+        <input id="id_password_input" type="password" name="password" value="" placeholder="Twoje hasło">
+    </p>
+    <p>
+        <label for="id_username_input">Username:</label>
+        <input id="id_username_input" type="text" name="username" value="" placeholder="Twoja nazwa użytkownika">
+    </p>
+    <p>
+        <label for="id_email_input">Email:</label>
+        <input id="id_email_input" type="email" name="email" value="" placeholder="Twój adres email">
+    </p>
+    <p>
+        <label for="id_date_input">Date:</label>
+        <input id="id_date_input" type="date" name="date" value="" placeholder="Data rejestracji">
+    </p>
+    <p>
+        <label for="id_chekbox_input">Checkbox:</label>
+        <input id="id_chekbox_input" type="checkbox" name="checkbox" value="" placeholder="Checkbox">
+    </p>
+    <p>
+        <label for="id_favorite_book_input">Favorite book:</label>
+        <select id="id_favorite_book_input" name="favorite_book">
+            <option value="1">Harry Potter</option>
+            <option value="2">Władca Pierścieni</option>
+            <option value="3">Hobbit</option>
+        </select>
+    </p>
+    <p>
+<!--        <input type="submit" value="Submit">-->
+        <button type="submit"><strong>Submit</strong></button>
+    </p>
+    <input type="hidden" name="hidden_type" value="Ukryta wartość">
+</form>
+ {% endblock %}

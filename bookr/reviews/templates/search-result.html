@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Search Results</title>
+    {% if form.is_valid and search_text %}
+        <p>Results for: {{ search_text }}</p>
+    {% else %}
+        <p>Search for a book.</p>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Search Results</h1>
+                <form>
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Szukaj</button>
+                </form>
+                <hr>
+                {% if form.is_valid and search_text %}
+                <h3>Search result for <em>{{ search_text }}</em></h3>
+                    {% for book in books %}
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <span class="text-info">Tytuł:</span><a href="{% url 'book_detail' book.pk %}">{{ book }}</a>
+                            <br/>
+                                <span class="text-info">Autorzy:</span>
+                                {% for contributor in book.contributor.all %}
+                                    {{ contributor.first_name }} {{ contributor.last_name }}
+                                    {% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </li>
+                            {% empty %}
+                                <li class="list-group-item">No results found.</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+{% endblock %}

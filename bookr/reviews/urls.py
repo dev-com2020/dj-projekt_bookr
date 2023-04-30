@@ -10,6 +10,7 @@ from bookr import settings
 urlpatterns = [
     path('', views.welcome_view, name='welcome'),
     path('books/', views.book_list, name='book_list'),
-
+    # path('form/', views.form_example, name='form_example'),
+    path('book-search/', views.book_search, name='book_search'),
 
 ]
