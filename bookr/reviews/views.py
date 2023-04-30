@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 from .forms import SearchForm
-from .models import Book
+from .models import Book, Contributor
 from .utils import average_rating
 
 
@@ -46,4 +46,14 @@ def book_search(request):
     search_text = request.GET.get('search', "")
     form = SearchForm(request.GET)
     books = set()
+    if form.is_valid() and form.cleaned_data['search']:
+        search = form.cleaned_data['search']
+        search_in = form.cleaned_data.get['search_in'] or "title"
+        if search_in == "title":
+            books = Book.objects.filter(title__icontains=search)
+        if search_in == "title":
+            books = Book.objects.filter(author__icontains=search)
+        else:
+            fname_contributors = Contributor.objects.filter(first_names__icontains=search)
+        books = Book.objects.filter(title__icontains=search_text)
     return render(request, "search-result.html", {'search_text': search_text, 'form': form, 'books': books})
