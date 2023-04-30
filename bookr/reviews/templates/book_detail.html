@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>{{ book.title }}</h1>
+      <h2>{{ book.publisher }}</h2>
+      <h3>{{ book.publication_date }}</h3>
+      {% if not reviews %}
+      <h3>No reviews yet</h3>
+      {% else %}
+      <h4>Rating: <span class="badge badge-primary badge-pill">{{ book_rating }}</span></h4>
+      {% endif %}
+         <h3>Review Comments</h3>
+      <ul>
+        {% for review in reviews %}
+        <li class="list-group-item">
+          <h5>{{ review.rating }} / 5</h5>
+          <p>{{ review.review }}</p>
+          <p>By {{ review.reviewer }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+  {% endblock %}
