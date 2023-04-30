@@ -1,8 +1,8 @@
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
-
-from .forms import SearchForm
-from .models import Book, Contributor
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from .forms import SearchForm, PublisherForm
+from .models import Book, Contributor, Publisher
 from .utils import average_rating
 
 
@@ -84,3 +84,23 @@ def book_detail(request,pk):
             'number_of_reviews': None}
 
     return render(request, "book_detail.html", context)
+
+def publisher_edit(request, pk=None):
+    if pk is None:
+        publisher = get_object_or_404(Publisher, pk=pk)
+    else:
+        publisher = None
+
+    if request.method == "POST":
+        form = PublisherForm(request.POST, instance=publisher)
+        if form.is_valid():
+            update_publisher = form.save()
+            if publisher is None:
+                messages.success(request, "Dodano nowego wydawcę.")
+            else:
+                messages.success(request, "Zaktualizowano dane wydawcy = {}".format(update_publisher.name))
+            return redirect("publisher_edit",update_publisher.pk)
+    else:
+        form = PublisherForm(instance=publisher)
+
+    return render(request, "form-example.html", {"form": form, "method": request.method, "publisher": publisher, "pk": pk})

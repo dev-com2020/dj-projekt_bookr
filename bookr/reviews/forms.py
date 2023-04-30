@@ -1,11 +1,12 @@
 from django import forms
 
-from .models import Publisher
+from .models import Publisher, Review
 
 
 class SearchForm(forms.Form):
     initial = {'placeholder': "What are you looking for?"}
-    search = forms.CharField(required=True, min_length=3,widget=forms.TextInput(attrs={'placeholder': 'What are you looking for?'}))
+    search = forms.CharField(required=True, min_length=3,
+                             widget=forms.TextInput(attrs={'placeholder': 'What are you looking for?'}))
     # search = forms.CharField(required=True, min_length=3, initial=initial['placeholder'])
     search_in = forms.ChoiceField(
         choices=(('title', 'Title'),
@@ -25,3 +26,12 @@ class PublisherForm(forms.ModelForm):
         fields = '__all__'
         widgets = {"name": forms.TextInput(attrs={'placeholder': 'Publisher name'})}
         # exclude = ()
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = '__all__'
+        widgets = {"reviewer_name": forms.TextInput(attrs={'placeholder': 'Your name'})}
+
+    rating = forms.IntegerField(min_value=0, max_value=5)
