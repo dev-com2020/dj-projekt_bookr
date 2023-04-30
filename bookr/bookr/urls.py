@@ -17,9 +17,9 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from reviews.admin import admin_site
+from django.conf import settings
 
-from bookr import settings
+from reviews.admin import admin_site
 
 # importujemy nasz moduł reviews.views PyCharm zawsze podkreśla nam to na czerwono, ale nie przejmuj się tym
 

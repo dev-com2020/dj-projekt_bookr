@@ -2,23 +2,23 @@
 {% block content %}
 <h2>
     {% if instance %}
-        Edycja {{ model_type }} {{ instance }}
+    Edycja {{ model_type }} {{ instance }}
     {% else %}
-        Dodawanie {{ model_type }}
+    Dodawanie {{ model_type }}
     {% endif %}
 </h2>
 {% if related_instance %}
-    <h3>Przypisane do {{ related_model_type }} {{ related_instance }}</h3>
+<h3>Przypisane do {{ related_model_type }} {{ related_instance }}</h3>
 {% endif %}
-<form method="post">
+<form method="post" {% if is_file_upload %}enctype="multipart/form-data"{% endif %}>
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn btn-primary">
-      {% if instance %}
+        {% if instance %}
         Zapisz zmiany
-      {% else %}
+        {% else %}
         Dodaj
-      {% endif %}
+        {% endif %}
     </button>
 </form>
 {% endblock %}
