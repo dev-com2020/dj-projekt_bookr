@@ -3,6 +3,9 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
+            {% if book.cover %}
+            <img src="{{ book.cover.url }}" alt="{{ book.title }}" class="img-thumbnail">
+            {% endif %}
             <h1>{{ book.title }}</h1>
             <h2>{{ book.publisher }}</h2>
             <h3>{{ book.publication_date }}</h3>
@@ -20,6 +23,8 @@
                 {% endfor %}
             </ul>
             <a class="btn btn-primary" href="{% url 'review_create' book.pk %}">Dodaj komentarz</a>
+
+            <a href="{{ MEDIA_URL }}test.txt">TEST POBIERANIA</a>
         </div>
     </div>
 </div>
